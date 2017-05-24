@@ -22,7 +22,7 @@ function setLang(ext) {
   element.closest('li').addClass('active');
   ace.edit("editor").getSession().setMode(`ace/mode/${mode[ext]}`);
   $('#curLang').html(element.html());
-  lang = ext;
+  lang = Object.keys(mode).includes(ext) ? ext : 'c' ;
 }
 
 function init() {
