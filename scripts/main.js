@@ -10,7 +10,6 @@ var lang_sample;
 
 var mode = {
   js : "javascript",
-  py : "python",
   py2 : "python",
   c : "c_cpp",
   cpp : "c_cpp",
@@ -23,6 +22,7 @@ function setLang(ext) {
   element.closest('li').addClass('active');
   ace.edit("editor").getSession().setMode(`ace/mode/${mode[ext]}`);
   $('#curLang').html(element.html());
+  lang = ext;
 }
 
 function init() {
