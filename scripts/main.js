@@ -8,6 +8,23 @@
 var lang;
 var lang_sample;
 
+var mode = {
+  js : "javascript",
+  py : "python",
+  py2 : "python",
+  c : "c_cpp",
+  cpp : "c_cpp",
+  java : "java"
+}
+
+function setLang(ext) {
+  var element = $(`#${ext}`);
+  $('ul li.active').removeClass('active');
+  element.closest('li').addClass('active');
+  ace.edit("editor").getSession().setMode(`ace/mode/${mode[ext]}`);
+  $('#curLang').html(element.html());
+}
+
 function init() {
     if (lang == undefined || lang == 'c') {
         lang = 'c';
@@ -88,8 +105,7 @@ $(document).ready(function () {
     $('.lang').click(function (event) {
         event.preventDefault();
         lang = $(this).attr('id');
-        $('ul li.active').removeClass('active');
-        $(this).closest('li').addClass('active');
+        setLang(lang);
         init();
     });
   
@@ -101,6 +117,8 @@ $(document).ready(function () {
   var fileInput = document.getElementById('upload');
   fileInput.addEventListener('change', function(e) {
       var file = fileInput.files[0];
+      var ext = file.name.split('.').pop();
+      setLang(ext);
       var reader = new FileReader();
       reader.onload = function(e) { // closure to set read data to editor
           ace.edit("editor").setValue(reader.result);

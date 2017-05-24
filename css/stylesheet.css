@@ -1640,3 +1640,6 @@ footer.bg-dark a {
     font-size: 1em!important;
   }
 }
+#curLang{
+  font-weight:bold;
+}
