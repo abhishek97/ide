@@ -22,12 +22,12 @@ function setLang(ext) {
   element.closest('li').addClass('active');
   ace.edit("editor").getSession().setMode(`ace/mode/${mode[ext]}`);
   $('#curLang').html(element.html());
-  lang = Object.keys(mode).includes(ext) ? ext : 'c' ;
+  lang = Object.keys(mode).includes(ext) ? ext : 'cpp' ;
 }
 
 function init() {
-    if (lang == undefined || lang == 'c') {
-        lang = 'c';
+    if (lang == undefined || lang == 'cpp') {
+        lang = 'cpp';
     }
     lang_sample = lang_samples[lang];
     ace.edit("editor").setValue(lang_sample);
