@@ -25,6 +25,7 @@ function setLang(ext) {
   lang = Object.keys(mode).includes(ext) ? ext : 'cpp' ;
 }
 
+var ifLocalStorage=0;
 function init() {
     if (lang == undefined || lang == 'cpp') {
         lang = 'cpp';
@@ -32,14 +33,18 @@ function init() {
     lang_sample = lang_samples[lang];
     ace.edit("editor").setValue(lang_sample);
     console.log("Language = " + lang);
+    if(!ifLocalStorage) {
+        loadLocalStorage();
+        ifLocalStorage=1;
+    }
 }
 
-    $('.changetheme').click(function (event) {
-        event.preventDefault();
-        var newtheme = $(this).attr('id');
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/"+newtheme); 
-    });
+$('.changetheme').click(function (event) {
+    event.preventDefault();
+    var newtheme = $(this).attr('id');
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/" + newtheme);
+});
 
 $(document).ready(function () {
     var URL = "https://judge.cb.lk/api/";
@@ -49,11 +54,11 @@ $(document).ready(function () {
     var runButton = $('#submit');
     runButton.click(function () {
         runButton.button('loading');
-        var source = ace.edit("editor").getValue();	
-        if(lang === 'js') {
+        var source = ace.edit("editor").getValue();
+        if (lang === 'js') {
             var jsWorker = new Worker('scripts/javascriptWebWorker.js');
             var input = '';
-            jsWorker.postMessage( {source , input } );
+            jsWorker.postMessage({source, input});
 
             jsWorker.onmessage = function (e) {
                 console.log(e.data);
@@ -61,14 +66,14 @@ $(document).ready(function () {
                 $('#output').text(e.data.output.join('\n'));
             };
 
-            return ;
+            return;
         }
 
         source = window.btoa(source);
         var testcases = $("#test-input").val(); // cusotm inputs
         testcases = window.btoa(testcases);
         var expected = '';
-        
+
         var config = {
             headers: {'Access-Token': '79f3c2f8301fc60565de003f4ac76a1d4e5242cb0836995ec2bd28fd083ce86f'}
         };
@@ -100,6 +105,7 @@ $(document).ready(function () {
     $('#clear').click(function () {
         ace.edit("editor").setValue('');
         document.getElementById('test-input').value = "";
+        localStorage.clear();
     });
 
     $('.lang').click(function (event) {
@@ -126,4 +132,29 @@ $(document).ready(function () {
       reader.readAsText(file);	
   });
   
+});
+
+//toggle full-screen mode
+$(document).ready(function () {
+    //Toggle fullscreen
+   $("#panel-fullscreen").click(function (e) {
+     e.preventDefault();
+     
+     var $this = $(this);
+
+     if ($this.children('i').hasClass('glyphicon-resize-full')){
+			$this.attr('title','Exit Full Screen');
+			$this.children('i').removeClass('glyphicon-resize-full');
+            $this.children('i').addClass('glyphicon-resize-small');
+      }
+     else if($this.children('i').hasClass('glyphicon-resize-small')){
+			$this.attr('title','Enter Full Screen Mode');
+            $this.children('i').removeClass('glyphicon-resize-small');
+            $this.children('i').addClass('glyphicon-resize-full');
+      }
+     $(this).closest('.hovercard').toggleClass('panel-fullscreen');
+     $('.fsHide').toggleClass('fs')
+	 $('#editor').toggleClass('change_height');
+     editor.resize();
+    });
 });
