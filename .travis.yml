@@ -8,14 +8,5 @@ cache:
 before_script:
    - npm install
 
-script: npm run build
+script: bash ./deploy.sh 
 
-deploy:
-    provider: pages
-    skip_cleanup: true,
-    github_token: $GITHUB_TOKEN
-    on:
-        branch: travis 
-
-local_dir: "dist"
-name: "Travis Bot"
