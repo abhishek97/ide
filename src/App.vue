@@ -20,6 +20,7 @@ export default {
   }
 }
 </script>
+<style src="bootstrap/dist/css/bootstrap.css"></style>
 <style src="font-awesome/css/font-awesome.css"></style>
 <style src="./assets/css/whole.css"></style>
 

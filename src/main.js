@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Vue2Filters from 'vue2-filters'
 import App from './App'
 import store from './store'
-import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap/dist/css/bootstrap.css'
 
 // import BootstrapVue from 'bootstrap-vue'
 
