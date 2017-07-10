@@ -17,4 +17,4 @@ deploy:
     on:
         branch: travis 
 
-local_dir: build
+local_dir: dist
